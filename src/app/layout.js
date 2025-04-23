@@ -1,14 +1,31 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import Menu from "./components/menu/menu";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "./assets/fonts/SpaceGrotesk-Light.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "./assets/fonts/SpaceGrotesk-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./assets/fonts/SpaceGrotesk-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./assets/fonts/SpaceGrotesk-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-space-grotesk",
 });
 
 export const metadata = {
@@ -19,7 +36,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${spaceGrotesk.variable}`}>
+        <Menu />
         {children}
       </body>
     </html>

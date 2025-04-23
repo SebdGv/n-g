@@ -1,95 +1,88 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useEffect, useState } from "react";
+import Title from "./components/titles/title";
+import "./home.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [blocks, setBlocks] = useState([]);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    // Fonction pour calculer le nombre de blocs nécessaires
+    const calculateBlocks = () => {
+      const container = document.querySelector(".hover-container");
+      if (!container) return;
+      // Obtenir les dimensions du conteneur
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      // Définir la taille des blocs en fonction de la largeur d'écran
+      const blockWidth = window.innerWidth <= 900 ? 25 : 50; // Ajuster selon media query
+      const blockHeight = window.innerWidth <= 900 ? 25 : 50;
+      const gap = window.innerWidth <= 900 ? 2 : 5; // gap entre les blocs selon votre CSS
+
+      // Calculer combien de blocs peuvent tenir dans la grille
+      // Tenir compte du gap entre les blocs
+      const columns = Math.floor((containerWidth + gap) / (blockWidth + gap));
+      const rows = Math.floor((containerHeight + gap) / (blockHeight + gap));
+      const totalBlocks = columns * rows;
+
+      // Générer le tableau de blocs
+      const newBlocks = Array.from(
+        { length: totalBlocks },
+        (_, index) => index
+      );
+      setBlocks(newBlocks);
+    };
+
+    // Calculer initialement
+    calculateBlocks();
+
+    // Recalculer lors du redimensionnement de la fenêtre
+    window.addEventListener("resize", calculateBlocks);
+
+    // Nettoyage
+    return () => {
+      window.removeEventListener("resize", calculateBlocks);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Appliquer l'effet de survol une fois les blocs générés
+    const blockElements = document.querySelectorAll(".block");
+    const resetDuration = 500;
+
+    blockElements.forEach((block) => {
+      let timeoutID;
+
+      const handleMouseOver = () => {
+        clearTimeout(timeoutID);
+        block.classList.add("active");
+        timeoutID = setTimeout(() => {
+          block.classList.remove("active");
+        }, resetDuration);
+      };
+
+      block.addEventListener("mouseover", handleMouseOver);
+
+      return () => {
+        block.removeEventListener("mouseover", handleMouseOver);
+        clearTimeout(timeoutID);
+      };
+    });
+  }, [blocks]); // Exécuter quand les blocs changent
+
+  return (
+    <div className="page-content hero container">
+      <Title text="Esp; 24" />
+      <div className="hover-container">
+        <div className="hover-overlay"></div>
+        <div className="hover-blocks">
+          {blocks.map((index) => (
+            <div className="block" key={index}></div>
+          ))}
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
