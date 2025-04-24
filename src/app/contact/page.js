@@ -1,8 +1,9 @@
 import Title from "../components/titles/title";
+import "./contact.css";
 
 const page = () => {
   return (
-    <div className="page-content">
+    <div className="contact-page">
       <Title text="Contact" />
     </div>
   );

@@ -13,13 +13,15 @@
 
 .menu-bar a,
 .menu-open p {
-  color: #fabab5;
+  color: var(--menu-bar-text);
   cursor: pointer;
+  transition: color var(--transition-speed) var(--transition-ease);
 }
 
 .menu-close p {
-  color: #fabab5;
+  color: var(--menu-over-text);
   cursor: pointer;
+  transition: color var(--transition-speed) var(--transition-ease);
 }
 
 .menu-overlay {
@@ -29,11 +31,12 @@
   width: 100vw;
   height: 100vh;
   padding: 2em;
-  background: #690700;
-  color: #fabab5;
+  background: var(--menu-overlay-bg);
+  color: var(--menu-overlay-text);
   z-index: 10;
   display: flex;
   clip-path: polygon(0 0, 100% 0, 100% 0, 0% 0%);
+  transition: background-color var(--transition-speed) var(--transition-ease);
 }
 
 .menu-close-icon {
@@ -58,7 +61,6 @@
 
 .menu-close-icon {
   font-size: 100px;
-  -webkit-text-stroke: 2px #be6f6f;
   line-height: 70%;
 }
 
@@ -72,7 +74,7 @@
 }
 
 .menu-link-item-holder a {
-  color: #300300;
+  color: var(--menu-overlay-text);
   font-size: 80px;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -81,7 +83,7 @@
   transition: all 0.5s ease;
 }
 .menu-link-item-holder a:hover {
-  color: #be6f6f;
+  color: var(--menu-link-hover);
 }
 .menu-link-item-holder a:hover {
   background-position: bottom;

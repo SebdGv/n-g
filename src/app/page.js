@@ -70,11 +70,11 @@ export default function Home() {
         clearTimeout(timeoutID);
       };
     });
-  }, [blocks]); // Exécuter quand les blocs changent
+  }, [blocks]);
 
   return (
     <div className="page-content hero container">
-      <Title text="Esp; 24" />
+      <Title text="Lab." />
       <div className="hover-container">
         <div className="hover-overlay"></div>
         <div className="hover-blocks">

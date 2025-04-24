@@ -1,0 +1,25 @@
+.vos22-page {
+  background: #011202;
+}
+
+.vos22-page h1 {
+  color: rgb(103, 171, 103);
+}
+
+.vos22-page .images-container {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  overflow: hidden;
+}
+
+.vos22-page .image-container {
+  will-change: transform, clip-path;
+  background: #011202;
+}
+
+.vos22-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
